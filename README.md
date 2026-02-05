@@ -60,12 +60,12 @@ PROJECT REQUIREMENTS:
   - Allow user to download the organized output folder
 
 5. Video Handling (Optional but preferred)
-- Extract frames every N seconds
-- Detect and group faces from frames
+- Just Create a folder with name video and move all the videos their
+- Don't Detect and group faces from video frames
 - Create a sub-folder per video:
-    video_name/
-      ├── Person_1/
-      ├── Person_2/
+    videos/
+      ├── video1.mp4
+      ├── video2.mkv
 
 6. Constraints
 - No deep learning training
