@@ -453,7 +453,7 @@ This project is open source and available under the MIT License.
 For issues or questions:
 1. Check the troubleshooting section
 2. Review GitHub issues
-3. Contact: your-email@example.com
+3. Contact: nielitr@gmail.com
 
 ## 🚀 Future Enhancements
 
