@@ -1,0 +1,46 @@
+# Python Dependencies for Automatic Face Grouping Application
+
+# Web Framework
+Flask
+Werkzeug
+
+# Face Recognition and Computer Vision
+face_recognition @ git+https://github.com/lovnishverma/face_recognition.git
+opencv-python
+opencv-contrib-python
+
+# Machine Learning and Scientific Computing
+scikit-learn
+numpy
+scipy
+
+# Image Processing
+Pillow
+imageio
+
+# Utilities
+python-dateutil
+
+# IMPORTANT INSTALLATION NOTES:
+# ============================
+# 
+# 1. Install Visual C++ Build Tools (for dlib on Windows):
+#    Download from: https://visualstudio.microsoft.com/visual-cpp-build-tools/
+#    Or use: pip install dlib-binary (if available)
+#
+# 2. Install CMake (required for dlib):
+#    Download from: https://cmake.org/download/
+#    Or use: pip install cmake
+#
+# 3. For easier installation on Windows, consider using pre-built wheels:
+#    pip install dlib-binary
+#    pip install face-recognition-models
+#
+# 4. Install in order:
+#    pip install cmake
+#    pip install dlib
+#    pip install face-recognition
+#    pip install -r requirements.txt
+#
+# 5. If you encounter issues with dlib, try:
+#    conda install -c conda-forge dlib  (if using Anaconda)

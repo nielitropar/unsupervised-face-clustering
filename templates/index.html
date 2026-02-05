@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatic Face Grouping - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🎭 Automatic Face Grouping</h1>
+            <p class="subtitle">Upload photos and videos - We'll automatically group similar faces</p>
+        </header>
+
+        <!-- Main Upload Section -->
+        <div class="upload-section">
+            <div class="upload-box" id="uploadBox">
+                <div class="upload-icon">📁</div>
+                <h2>Drop Files Here</h2>
+                <p>or click to browse</p>
+                <input type="file" id="fileInput" multiple accept="image/*,video/*" style="display: none;">
+                <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                    Select Files
+                </button>
+                <div class="file-info">
+                    <small>Supported: JPG, PNG, MP4, AVI (Max 500MB)</small>
+                </div>
+            </div>
+
+            <!-- File List -->
+            <div id="fileList" class="file-list" style="display: none;">
+                <h3>Selected Files</h3>
+                <div id="fileListContent"></div>
+                <button class="btn btn-success" id="uploadBtn" onclick="uploadFiles()">
+                    Upload & Start Processing
+                </button>
+            </div>
+        </div>
+
+        <!-- Processing Section -->
+        <div id="processingSection" class="processing-section" style="display: none;">
+            <div class="processing-spinner"></div>
+            <h3>Processing Your Files...</h3>
+            <p id="processingStatus">Uploading files...</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Advanced Options (Collapsible) -->
+        <div class="advanced-options">
+            <button class="btn btn-secondary" onclick="toggleAdvanced()">
+                ⚙️ Advanced Options
+            </button>
+            <div id="advancedPanel" class="advanced-panel" style="display: none;">
+                <div class="option-group">
+                    <label for="epsValue">Similarity Threshold (eps):</label>
+                    <input type="range" id="epsValue" min="0.3" max="0.7" step="0.05" value="0.5">
+                    <span id="epsDisplay">0.5</span>
+                    <small>Lower = stricter matching</small>
+                </div>
+                <div class="option-group">
+                    <label for="minSamples">Minimum Faces per Person:</label>
+                    <input type="number" id="minSamples" min="1" max="5" value="2">
+                    <small>Minimum faces needed to form a group</small>
+                </div>
+                <div class="option-group">
+                    <label>
+                        <input type="checkbox" id="processVideos" checked>
+                        Process Video Files
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works Section -->
+        <div class="info-section">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Upload Files</h3>
+                    <p>Select photos and videos from your device</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Face Detection</h3>
+                    <p>AI automatically detects all faces</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Smart Grouping</h3>
+                    <p>Similar faces are clustered together</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Download Results</h3>
+                    <p>Get organized folders by person</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features">
+            <div class="feature">
+                <span class="feature-icon">🚀</span>
+                <h3>No Training Required</h3>
+                <p>Just upload and go - no setup needed</p>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">🎯</span>
+                <h3>Automatic Detection</h3>
+                <p>Finds all faces automatically</p>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">📊</span>
+                <h3>Smart Clustering</h3>
+                <p>Groups similar faces using AI</p>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">🎬</span>
+                <h3>Video Support</h3>
+                <p>Works with photos and videos</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by Flask + face_recognition + DBSCAN | No data is stored permanently</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

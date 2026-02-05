@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Grouping Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>✅ Face Grouping Complete!</h1>
+            <p class="subtitle">Your photos have been organized by person</p>
+        </header>
+
+        <!-- Results Summary -->
+        <div class="results-summary">
+            <div class="summary-card">
+                <h2>{{ folders|length }}</h2>
+                <p>Total Groups</p>
+            </div>
+            <div class="summary-card">
+                <h2>{{ folders|sum(attribute='count') }}</h2>
+                <p>Total Photos</p>
+            </div>
+        </div>
+
+        <!-- Folder List -->
+        <div class="folder-section">
+            <h2>Organized Folders</h2>
+            <div class="folder-grid">
+                {% for folder in folders %}
+                <div class="folder-card {% if folder.name == 'Unknown' %}unknown{% endif %}">
+                    <div class="folder-icon">
+                        {% if folder.name == 'Unknown' %}
+                        ❓
+                        {% else %}
+                        👤
+                        {% endif %}
+                    </div>
+                    <h3>{{ folder.name }}</h3>
+                    <p class="folder-count">{{ folder.count }} photo{{ 's' if folder.count != 1 else '' }}</p>
+                    {% if folder.name == 'Unknown' %}
+                    <small class="folder-note">Faces that couldn't be confidently grouped</small>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a href="{{ url_for('download_results') }}" class="btn btn-success btn-lg">
+                📥 Download All (ZIP)
+            </a>
+            <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
+                🔄 Process More Files
+            </a>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+            <h3>📂 What's in the download?</h3>
+            <ul>
+                <li><strong>Person_1, Person_2, etc.:</strong> Each folder contains photos of a unique person</li>
+                <li><strong>Unknown folder:</strong> Contains faces that couldn't be confidently matched</li>
+                <li><strong>Group photos:</strong> If multiple people appear in one photo, it's copied to each person's folder</li>
+            </ul>
+        </div>
+
+        <!-- Technical Details -->
+        <details class="technical-details">
+            <summary>Technical Details</summary>
+            <div class="details-content">
+                <p><strong>Algorithm Used:</strong> DBSCAN (Density-Based Spatial Clustering)</p>
+                <p><strong>Face Detection:</strong> dlib-based face_recognition library</p>
+                <p><strong>Embeddings:</strong> 128-dimensional face encodings</p>
+                <p><strong>Clustering:</strong> Unsupervised learning - no training required</p>
+            </div>
+        </details>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Files are stored temporarily and will be cleared when you upload new files</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add smooth animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.folder-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
