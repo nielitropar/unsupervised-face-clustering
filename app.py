@@ -8,7 +8,8 @@ import shutil
 from flask import Flask, render_template, request, redirect, url_for, send_file, jsonify
 from werkzeug.utils import secure_filename
 import zipfile
-from face_utils import process_images, process_videos
+# Removed process_videos from import as it is no longer used
+from face_utils import process_images
 from clustering import cluster_faces
 import json
 
@@ -114,8 +115,7 @@ def process():
             image_face_data = process_images(upload_folder, image_files)
             all_face_data.extend(image_face_data)
         
-       
-    # Handle videos: Just move them to a 'videos' folder without processing
+        # Handle videos: Just move them to a 'videos' folder without processing
         if video_files:
             print(f"Moving {len(video_files)} videos to output folder...")
             videos_output_path = os.path.join(output_folder, 'videos')
@@ -124,20 +124,26 @@ def process():
             for video_file in video_files:
                 src_path = os.path.join(upload_folder, video_file)
                 dst_path = os.path.join(videos_output_path, video_file)
-                shutil.copy2(src_path, dst_path))
+                # FIXED: Removed extra parenthesis below
+                shutil.copy2(src_path, dst_path)
         
-        if len(all_face_data) == 0:
+        if len(all_face_data) == 0 and not video_files:
             return jsonify({
                 'error': 'No faces detected in uploaded media',
                 'suggestion': 'Please upload images/videos containing visible faces'
             }), 400
-        
-        # Perform clustering
-        print(f"Clustering {len(all_face_data)} detected faces...")
-        clustered_data = cluster_faces(all_face_data)
-        
-        # Organize files into person folders
-        organize_files(clustered_data, output_folder)
+        elif len(all_face_data) == 0 and video_files:
+             # If only videos were uploaded (and thus moved), we shouldn't fail
+             pass
+
+        # Perform clustering (only if we have face data)
+        clustered_data = []
+        if all_face_data:
+            print(f"Clustering {len(all_face_data)} detected faces...")
+            clustered_data = cluster_faces(all_face_data)
+            
+            # Organize files into person folders
+            organize_files(clustered_data, output_folder)
         
         # Get statistics
         stats = get_statistics(output_folder)
@@ -211,6 +217,9 @@ def get_statistics(output_folder):
             
             if folder == "Unknown":
                 stats['unknown_count'] = file_count
+            elif folder == "videos":
+                # Optional: count videos separately if you want
+                pass 
             else:
                 stats['total_persons'] += 1
                 stats['person_counts'][folder] = file_count
