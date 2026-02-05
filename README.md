@@ -1,10 +1,3 @@
-Awesome project choice — this README will make your repo look **professional, clear, and recruiter-ready**.
-
-Below is a **complete, comprehensive `README.md`** you can copy-paste directly into your GitHub repository.
-
----
-
-```markdown
 # Automatic Face Grouping Web App (No Training, No Names)
 
 A Flask-based web application that automatically detects and groups faces from images and videos **without any prior training, manual labeling, or person names**.
