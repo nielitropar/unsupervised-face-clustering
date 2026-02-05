@@ -1,4 +1,4 @@
-# 📸 Automatic Face Grouping Application
+# 📸 Automatic Face Grouping Application System
 
 A Flask-based web application that automatically detects, groups, and organizes photos by faces using unsupervised machine learning. **No training, no manual labeling, no person names required!**
 
