@@ -114,11 +114,17 @@ def process():
             image_face_data = process_images(upload_folder, image_files)
             all_face_data.extend(image_face_data)
         
-        # Process videos (extract frames and detect faces)
+       
+    # Handle videos: Just move them to a 'videos' folder without processing
         if video_files:
-            print(f"Processing {len(video_files)} videos...")
-            video_face_data = process_videos(upload_folder, video_files)
-            all_face_data.extend(video_face_data)
+            print(f"Moving {len(video_files)} videos to output folder...")
+            videos_output_path = os.path.join(output_folder, 'videos')
+            os.makedirs(videos_output_path, exist_ok=True)
+            
+            for video_file in video_files:
+                src_path = os.path.join(upload_folder, video_file)
+                dst_path = os.path.join(videos_output_path, video_file)
+                shutil.copy2(src_path, dst_path))
         
         if len(all_face_data) == 0:
             return jsonify({
